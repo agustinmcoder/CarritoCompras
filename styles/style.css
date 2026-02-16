@@ -1,0 +1,191 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.nav-button {
+  height: 30px;
+  width: 30px;
+  background-color: wheat;
+}
+
+ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 16px;
+}
+
+ul li {
+  list-style: none;
+}
+
+ul li .nav-link {
+  text-decoration: none;
+  color: red;
+}
+
+ul li .nav-link:hover {
+  color: whitesmoke;
+}
+
+.container-fluid {
+  margin-bottom: 48px;
+}
+
+.navbar-mio .navbar-toggler {
+  margin-left: auto;
+}
+
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 16px;
+  font-size: 10px;
+  margin-top: 120px;
+}
+
+body {
+  margin: 18px;
+  font-family: "Roboto Condensed", sans-serif;
+  background-color: black;
+  color: #EC3919;
+  font-size: 18px;
+}
+
+h1 {
+  font-size: 44px;
+  text-decoration: underline;
+  text-align: center;
+}
+
+h4 {
+  font-size: 14px;
+  text-align: center;
+  padding-bottom: 20px;
+  color: #EC3919;
+}
+
+.btn-mio {
+  display: inline-block;
+  text-decoration: none;
+  color: whitesmoke;
+  border-radius: 8px;
+  padding: 8px 14px;
+  background-color: #EC3919;
+  text-decoration: underline;
+  justify-items: end;
+  margin-top: 15px;
+  color: black;
+}
+
+.btn-mio:hover {
+  background-color: whitesmoke;
+  color: black;
+}
+
+.card {
+  width: 18rem;
+  border-color: #EC3919;
+  background-color: black;
+}
+
+.card .card-body {
+  color: whitesmoke;
+  font-size: 12px;
+}
+
+.card-img-top {
+  height: 40%;
+  width: auto;
+}
+
+.card-compra {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: space-between;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.card-title {
+  font-size: 22px;
+  color: #EC3919;
+}
+
+.card-body {
+  font-size: 12px;
+  color: #EC3919;
+}
+
+.resumen {
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.liCarrito {
+    margin-bottom: 8px;
+}
+
+.olCarrito{
+    list-style-position: inside;
+    padding: 2px;
+    margin: 4px;
+}
+
+.controlesCarrito {
+    display: inline-flex;
+    gap: 80px;
+    margin-left: 8px;
+    padding: 8px; 
+    cursor: pointer;
+    width: 10px;
+
+}
+
+.carrito-btn-masmenos{
+    width: 25px;
+    height: 25px;
+    background-color: #EC3919;
+    color: whitesmoke;
+    align-content: center;
+    gap: 20px;
+}
+
+.btn-finalizar {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    width: 150px;
+    align-items: center;
+    justify-content: center;
+    background-color: #EC3919;
+}
+
+.filtro {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    padding: 8px;
+    border-radius: 8px;
+    color: whitesmoke;
+    background-color: black;
+    border-color: #EC3919;
+    float: left;
+
+    
+}
+
+.label {
+    
+  float: left;
+  margin-right: 1rem;
+  display: block;
+}
+
