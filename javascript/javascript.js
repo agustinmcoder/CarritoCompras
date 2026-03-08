@@ -1,11 +1,8 @@
-//defino los objetos productos (donde va a ir mi catalogo) y carrito (el carrito del cliente)
-const productos = [
-  { serial: 1, name: "Hamburguesa simple", precio: 4200, categoria: "comida" },
-  { serial: 2, name: "Hamburguesa completita doble", precio: 9500, categoria: "comida" },
-  { serial: 3, name: "Gaseosa linea coca", precio: 2000, categoria: "bebida" },
-  { serial: 4, name: "Lata de cerveza", precio: 3300, categoria: "bebida" },
-  { serial: 5, name: "Combo especial mes de Febrero", precio: 22000, categoria: "combo" }
-];
+//Luego de cambiar la forma de cargar los productos (ahora los trae con async y fetch), no me dejaba agregar cosas al carrito. Investigando vi que era porque algunos navegadores bloquean el acceso a fetchs. Lo cargue en Netlify y anda bien.
+
+
+//defino los objetos productos (donde va a ir mi catalogo) y carrito (el carrito del cliente). Antes estaban definidos aca. Ahora estan definidos en productos.json y se traen con fetch-await
+let productos = [];
 
 let carrito = [];
 
@@ -23,6 +20,24 @@ function cargarCarritoDesdeSession() {
     const parsed = JSON.parse(auxiliar); 
     if (Array.isArray(parsed)) carrito = parsed; }
 
+//funcion nueva. Ahora carga productos desde el json.
+async function cargarProductosDesdeArchivo(ruta = 'productos.json') {
+  try {
+    const res = await fetch(ruta);
+    if (!res.ok) {
+      console.warn('No se pudo obtener productos.json, status:', res.status);
+      return;
+    }
+    const data = await res.json();
+    if (Array.isArray(data)) {
+      productos = data;
+    } else {
+      console.warn('productos.json no contiene un array válido');
+    }
+  } catch (err) {
+    console.warn('Error cargando productos desde archivo:', err);
+  }
+}
 
 function asignarBotonAProducto() {
     //hace el matck entre botones y productos usando el data-serial
@@ -138,17 +153,32 @@ function agregarControlesAlCarrito() {
 
 
 function finalizarCompra() {
-    //boton para finalizar compra. Vacia tanto carrito como Sessionstorage
   const btnFinalizar = document.getElementById('finalizar-compra-btn');
   if (!btnFinalizar) return;
 
   btnFinalizar.addEventListener('click', () => {
-    carrito = [];
-    sessionStorage.removeItem('carrito');
-    mostrarCarrito();
-    agregarControlesAlCarrito();
+    Swal.fire({
+      title: "Estas seguro que quieres finalizar la compra?",
+      icon: "Question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Finalizar!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        carrito = [];
+        sessionStorage.removeItem('carrito');
+        mostrarCarrito();
+        agregarControlesAlCarrito();
+
+        Swal.fire({
+          title: "Realizado!",
+          text: "Su compra ha sido completada.",
+          icon: "success"
+        });
+      }
+    });
   });
-}
 
 
 
@@ -168,12 +198,14 @@ const contCarrito = document.getElementById('carrito-container'); if (contCarrit
 
 
 
-  cargarCarritoDesdeSession();   
-  asignarBotonAProducto();       
-  mostrarCarrito();              
-  agregarControlesAlCarrito();    
-  finalizarCompra();             
-
+(async () => {
+  await cargarProductosDesdeArchivo(); // primero tiene que cargar productos, antes de hacer todo lo demas
+  cargarCarritoDesdeSession();
+  asignarBotonAProducto();
+  mostrarCarrito();
+  agregarControlesAlCarrito();
+  finalizarCompra();
+})();
 
 
 

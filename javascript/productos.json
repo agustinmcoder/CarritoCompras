@@ -1,0 +1,7 @@
+[
+  { "serial": 1, "name": "Hamburguesa simple", "precio": 4200, "categoria": "comida" },
+  { "serial": 2, "name": "Hamburguesa completita doble", "precio": 9500, "categoria": "comida" },
+  { "serial": 3, "name": "Gaseosa linea coca", "precio": 2000, "categoria": "bebida" },
+  { "serial": 4, "name": "Lata de cerveza", "precio": 3300, "categoria": "bebida" },
+  { "serial": 5, "name": "Combo especial mes de Febrero", "precio": 22000, "categoria": "combo" }
+]
