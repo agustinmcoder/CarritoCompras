@@ -1,5 +1,4 @@
-//Luego de cambiar la forma de cargar los productos (ahora los trae con async y fetch), no me dejaba agregar cosas al carrito. Investigando vi que era porque algunos navegadores bloquean el acceso a fetchs. Lo cargue en Netlify y anda bien.
-
+//Aparecen algunas alertas en consola (Tracking Prevention blocked access to storage for <URL>.) No estoy muy seguro de que hacer con eso. Estuve buscando en internet, pero aparecen cosas que no vimos en el curso
 
 //defino los objetos productos (donde va a ir mi catalogo) y carrito (el carrito del cliente). Antes estaban definidos aca. Ahora estan definidos en productos.json y se traen con fetch-await
 let productos = [];
@@ -68,6 +67,22 @@ function agregarAlCarrito(serial) {
       cantidad: 1
     });
   }
+
+  const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  }
+});
+Toast.fire({
+  icon: "success",
+  title: `${productoEncontrado.name} agregado al carrito`
+});
   guardarCarritoEnSession(); 
   mostrarCarrito(); 
   agregarControlesAlCarrito();
@@ -127,6 +142,23 @@ function agregarControlesAlCarrito() {
       if (!item) return;
       item.cantidad = (item.cantidad || 0) - 1;
       if (item.cantidad <= 0) carrito = carrito.filter(x => x.serial !== serial);
+
+      const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+
+    Toast.fire({
+      icon: "error",
+      title: `${item.name} cantidad disminuida`
+    });
       guardarCarritoEnSession();
       mostrarCarrito();
       agregarControlesAlCarrito();
@@ -137,13 +169,31 @@ function agregarControlesAlCarrito() {
     btnMas.textContent = '+';
     btnMas.classList.add('carrito-btn-masmenos');
     btnMas.addEventListener('click', () => {
-      const item = carrito.find(x => x.serial === serial);
-      if (!item) return;
-      item.cantidad = (item.cantidad || 0) + 1;
-      guardarCarritoEnSession();
-      mostrarCarrito();
-      agregarControlesAlCarrito();
+    const item = carrito.find(x => x.serial === serial);
+    if (!item) return;
+    item.cantidad = (item.cantidad || 0) + 1;
+
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
     });
+
+    Toast.fire({
+      icon: "success",
+      title: `${item.name} cantidad aumentada`
+    });
+
+    guardarCarritoEnSession();
+    mostrarCarrito();
+    agregarControlesAlCarrito();
+  });
 
     controls.appendChild(btnMenos);
     controls.appendChild(btnMas);
@@ -159,7 +209,6 @@ function finalizarCompra() {
   btnFinalizar.addEventListener('click', () => {
     Swal.fire({
       title: "Estas seguro que quieres finalizar la compra?",
-      icon: "Question",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
@@ -178,7 +227,7 @@ function finalizarCompra() {
         });
       }
     });
-  });
+  })};
 
 
 
@@ -206,6 +255,3 @@ const contCarrito = document.getElementById('carrito-container'); if (contCarrit
   agregarControlesAlCarrito();
   finalizarCompra();
 })();
-
-
-
